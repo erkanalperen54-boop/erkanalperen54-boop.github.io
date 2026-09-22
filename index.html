@@ -1,136 +1,59 @@
-
 <!DOCTYPE html>
-<html lang="en">
+<html lang="tr">
 <head>
-
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Alperen Erkan</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <style>
-    body {
-      font-family: 'Inter', sans-serif;
-      background-color: #030303;
-      color: #ffffff;
-      margin: 0; 
-      overflow-x: hidden;
-      cursor: none;
-    }
-    ::selection {
-      background: rgba(34, 197, 94, 0.3);
-      color: #fff;
-    }
-    .font-heading {
-      font-family: 'Space Grotesk', sans-serif;
-    }
-    .neon-text-cyan {
-      text-shadow: 0 0 10px rgba(6, 182, 212, 0.7), 0 0 20px rgba(6, 182, 212, 0.5);
-    }
-    .neon-text-magenta {
-      text-shadow: 0 0 10px rgba(217, 70, 239, 0.7), 0 0 20px rgba(217, 70, 239, 0.5);
-    }
-    .neon-text-green {
-      text-shadow: 0 0 10px rgba(34, 197, 94, 0.7), 0 0 20px rgba(34, 197, 94, 0.5);
-    }
-    .neon-border-cyan {
-      box-shadow: 0 0 15px rgba(6, 182, 212, 0.3);
-    }
-    .glassmorphism {
-      background: rgba(255, 255, 255, 0.02);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      border: 1px solid rgba(255, 255, 255, 0.05);
-    }
-    .bg-grid {
-      background-size: 50px 50px;
-      background-image: linear-gradient(to right, rgba(255,255,255,0.02) 1px, transparent 1px),
-                        linear-gradient(to bottom, rgba(255,255,255,0.02) 1px, transparent 1px);
-    }
-    @keyframes fadeInSlideUp {
-      from { opacity: 0; transform: translateY(20px); filter: blur(10px); }
-      to { opacity: 1; transform: translateY(0); filter: blur(0); }
-    }
-    .animate-hero-text {
-      animation: fadeInSlideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-    }
-    .stagger-1 { animation-delay: 0.2s; opacity: 0; }
-    .stagger-2 { animation-delay: 0.4s; opacity: 0; }
-    .stagger-3 { animation-delay: 0.6s; opacity: 0; }
-    .stagger-4 { animation-delay: 0.8s; opacity: 0; }
-
-    #custom-cursor {
-      position: fixed;
-      width: 12px;
-      height: 12px;
-      background: #22c55e;
-      border-radius: 50%;
-      pointer-events: none;
-      z-index: 9999;
-      transform: translate(-50%, -50%);
-      transition: transform 0.1s ease-out, background 0.3s ease;
-      box-shadow: 0 0 10px #22c55e;
-    }
-    #cursor-follower {
-      position: fixed;
-      width: 40px;
-      height: 40px;
-      border: 1px solid rgba(34, 197, 94, 0.5);
-      border-radius: 50%;
-      pointer-events: none;
-      z-index: 9998;
-      transform: translate(-50%, -50%);
-      transition: transform 0.15s ease-out, width 0.3s, height 0.3s, border-color 0.3s;
-    }
-    .cursor-hover #custom-cursor {
-      transform: translate(-50%, -50%) scale(2.5);
-      background: #22c55e;
-      box-shadow: 0 0 15px #22c55e;
-    }
-    .cursor-hover #cursor-follower {
-      width: 70px;
-      height: 70px;
-      border-color: #22c55e;
-    }
-  </style>
-<script type="importmap">
-{
-  "imports": {
-    "react": "https://esm.sh/react@^19.2.3",
-    "react/": "https://esm.sh/react@^19.2.3/",
-    "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
-    "react-router-dom": "https://esm.sh/react-router-dom@^7.12.0",
-    "lucide-react": "https://esm.sh/lucide-react@^0.475.0",
-    "@google/genai": "https://esm.sh/@google/genai@^1.35.0"
-  }
-}
-</script>
-<link rel="stylesheet" href="/index.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Alperen Erkan — Baş Sistem Mimarı</title>
+<meta name="description" content="Alperen Erkan — İşletim sistemleri, çekirdek ve RTOS geliştirme. Stux6 Technologies Baş Sistem Mimarı.">
+<link rel="stylesheet" href="style.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⌘</text></svg>">
 </head>
-<body>
-  <div id="custom-cursor"></div>
-  <div id="cursor-follower"></div>
-  <div id="root"></div>
-  <script>
-    const cursor = document.getElementById('custom-cursor');
-    const follower = document.getElementById('cursor-follower');
-    document.addEventListener('mousemove', (e) => {
-      cursor.style.left = e.clientX + 'px';
-      cursor.style.top = e.clientY + 'px';
-      follower.style.left = e.clientX + 'px';
-      follower.style.top = e.clientY + 'px';
-    });
-    document.addEventListener('mouseover', (e) => {
-      if (e.target.tagName === 'A' || e.target.tagName === 'BUTTON' || e.target.closest('a') || e.target.closest('button')) {
-        document.body.classList.add('cursor-hover');
-      }
-    });
-    document.addEventListener('mouseout', (e) => {
-      if (e.target.tagName === 'A' || e.target.tagName === 'BUTTON' || e.target.closest('a') || e.target.closest('button')) {
-        document.body.classList.remove('cursor-hover');
-      }
-    });
-  </script>
-<script type="module" src="/index.tsx"></script>
+<body data-page="home">
+
+<header class="hero">
+  <p class="hero__kicker">Kernel · RTOS · Gömülü Sistemler</p>
+  <h1>Alperen Erkan</h1>
+  <p class="hero__sub">
+    <strong>Stux6 Technologies</strong> bünyesinde Baş Sistem Mimarı.
+    Çekirdekleri sıfırdan inşa ediyor; donanıma en yakın katmanda,
+    <strong>sıfır bağımlılık</strong> felsefesiyle çalışıyorum.
+  </p>
+  <div class="hero__cta">
+    <a class="btn btn--primary" href="about.html">Hakkımda</a>
+    <a class="btn btn--ghost" href="git.html">GitHub Çalışmaları →</a>
+  </div>
+  <div class="hero__scroll">Keşfet</div>
+</header>
+
+<section class="focus">
+  <div class="wrap">
+    <p class="eyebrow reveal">Odak Alanları</p>
+    <h2 class="section-title reveal">Düşük seviyede,<br>yüksek hassasiyetle.</h2>
+    <div class="focus-grid">
+      <article class="focus-card reveal">
+        <span class="num">01</span>
+        <h3>Çekirdek Mimarileri</h3>
+        <p>NeOx-Kernel ve KafeinOS gibi özgün işletim sistemi çekirdeklerini sıfırdan tasarlıyor; XNU üzerinde mimari iyileştirmeler geliştiriyorum.</p>
+      </article>
+      <article class="focus-card reveal" data-delay="120">
+        <span class="num">02</span>
+        <h3>Gerçek Zamanlı Sistemler</h3>
+        <p>Savunma sanayiine yönelik yüksek güvenlikli RTOS ve SCADA çözümlerinin mimari liderliğini yürütüyorum.</p>
+      </article>
+      <article class="focus-card reveal" data-delay="240">
+        <span class="num">03</span>
+        <h3>Özgür Yazılım</h3>
+        <p>GNU/Hurd, GNU Mach, Linux ve BlackArch ekosistemlerine kod düzeyinde katkı sunuyor; kafes tabanlı kriptografi üzerine çalışıyorum.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>Alperen Erkan — Ankara, Türkiye</p>
+  <p><a href="https://github.com/erkanalperen54-boop" target="_blank" rel="noopener">GitHub</a> · <a href="https://www.alperenerkan.com" target="_blank" rel="noopener">alperenerkan.com</a></p>
+</footer>
+
+<script src="shared.js"></script>
 </body>
 </html>
