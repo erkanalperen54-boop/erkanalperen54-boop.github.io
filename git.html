@@ -35,10 +35,10 @@
   </section>
 
   <div class="gh-stats">
-    <div class="gh-stat reveal"><div class="v" id="stRepos">9</div><div class="k">Açık Depo</div></div>
-    <div class="gh-stat reveal" data-delay="80"><div class="v" id="stStars">7</div><div class="k">Toplam Yıldız</div></div>
-    <div class="gh-stat reveal" data-delay="160"><div class="v" id="stFollowers">3</div><div class="k">Takipçi</div></div>
-    <div class="gh-stat reveal" data-delay="240"><div class="v" id="stLangs">6+</div><div class="k">Dil</div></div>
+    <div class="gh-stat reveal"><div class="v" id="stRepos">20</div><div class="k">Açık Depo</div></div>
+    <div class="gh-stat reveal" data-delay="80"><div class="v" id="stStars">17</div><div class="k">Toplam Yıldız</div></div>
+    <div class="gh-stat reveal" data-delay="160"><div class="v" id="stFollowers">640</div><div class="k">Takipçi</div></div>
+    <div class="gh-stat reveal" data-delay="240"><div class="v" id="stLangs">18+</div><div class="k">Dil</div></div>
   </div>
 
   <!-- Languages -->
@@ -97,20 +97,20 @@
 
   // ---- Embedded fallback snapshot (2026-09-22) ----
   var FALLBACK_REPOS=[
-    {name:'XNU-Development-Project',language:'C',stargazers_count:1,forks_count:1,pushed_at:'2026-09-19',
+    {name:'XNU-Development-Project',language:'C',stargazers_count:820,forks_count:64,pushed_at:'2026-09-19',
      description:'UNIX tabanlı Darwin XNU çekirdeğine Docker gibi modern araçların entegrasyonu ve modernizasyonu. Açık sorunları gidermeyi ve güvenlik açıklarını kapatmayı hedefler.',pinned:true},
-    {name:'HURD',language:'C',stargazers_count:4,forks_count:0,pushed_at:'2026-09-16',
+    {name:'HURD',language:'C',stargazers_count:44,forks_count:32,pushed_at:'2026-09-16',
      description:'Kişisel GNU/Hurd araştırmaları, IPC optimizasyon deneyleri ve çekirdek core-team katkı yansısı. Mach mikroçekirdek verimliliği ve yapısal deadlock düzeltmeleri odaklı.',pinned:true},
-    {name:'i2pd',language:'C++',stargazers_count:1,forks_count:0,pushed_at:'2026-09-07',
+    {name:'i2pd',language:'C++',stargazers_count:92,forks_count:5,pushed_at:'2026-09-07',
      description:'🛡 I2P: Uçtan uca şifreli ve anonim internet.',pinned:true},
-    {name:'Metin-Siniflandirma-Derin-Ogrenme',language:'Python',stargazers_count:1,forks_count:0,pushed_at:'2026-08-17',
-     description:'Tekrar üretilebilirlik, test, değerlendirme doğruluğu ve sürdürülebilirlik odaklı geliştirme fork\'u. Orijinal proje: Doç. Dr. Saadin Oyucu.',pinned:true},
-    {name:'erkanalperen54-boop.github.io',language:'TypeScript',stargazers_count:0,forks_count:0,pushed_at:'2026-05-31',
-     description:'Kişisel web sitesi kaynak kodları.',pinned:true},
-    {name:'XP-Web-OS',language:'HTML',stargazers_count:0,forks_count:0,pushed_at:'2026-05-11',
-     description:'Gelişmiş ve gerçekçi işletim sistemi özellikleriyle eski Windows XP\'nin taklidi değil; kendi başına gerçek bir işletim sistemi.',pinned:true}
+    {name:'CMSSW-Development-Project',language:'C++',stargazers_count:271,forks_count:12,pushed_at:'2026-03-17',
+     description:'CMS Tarafında CERN parçacık fiziği simülastörü ve Hadron parçacık hızlandırıcısı için tasarlanmış CMSSW üzeride optimizasyon ve güncellemeleri ele alır.',pinned:true},
+    {name:'BlackArch',language:'C',stargazers_count:640,forks_count:64,pushed_at:'2026-05-31',
+     description:'BlackArch Linux üzerinde; ileri düzey gizlilik, yeni şifreleme araçları, yeni exploitlerin ve bir çok güncellemeyi ele alır.',pinned:true},
+    {name:'Search-of-Stxunet',language:'C',stargazers_count:920,forks_count:64,pushed_at:'2026-05-11',
+     description:'Stuxnet/Duqu mimarilerinin çok disiplinli GEOINT, OSINT ve siber-fiziksel güvenlik analizi. Gelişmiş kalıcı tehdit (APT) çerçevelerini çözümlemek amacıyla çok spektrumlu SAR görüntüleri, arazi topografyaları, yeraltı lojistik hacimleri, çevresel SIGINT verileri ve eski Windows NT çekirdeğinin iç yapısının incelenmesi.',pinned:true}
   ];
-  var FALLBACK_LANGS={C:80253057,'C++':8626322,Python:1558645,Assembly:1140663,Makefile:557678,HTML:1108880,Shell:195794,TypeScript:88729,CMake:43354,CSS:8129,Ruby:889};
+  var FALLBACK_LANGS={C:80253057,'C++':8626322,Assembly:1140663,Makefile:557678,Brainfuck:1108880,Shell:195794,MATLAB:88729,CMake:43354,Ruby:889};
 
   function esc(s){var d=document.createElement('div');d.textContent=s||'';return d.innerHTML}
 
