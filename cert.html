@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sertifikalar — Alperen Erkan</title>
+<meta name="description" content="Alperen Erkan — sertifikalar ve resmî belgeler.">
+<link rel="stylesheet" href="style.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⌘</text></svg>">
+<style>
+.cert-head{padding:140px 0 16px}
+.cert-head h1{font-size:clamp(38px,6vw,62px);font-weight:700;letter-spacing:-.03em}
+.cert-head .lede{margin-top:16px;max-width:620px}
+.cert-grid{
+  display:grid;grid-template-columns:repeat(2,1fr);gap:44px 40px;
+  margin-top:56px;padding-bottom:100px;
+}
+@media(max-width:760px){.cert-grid{grid-template-columns:1fr}}
+.cert{transition:transform .4s var(--ease)}
+.cert:hover{transform:translateY(-4px)}
+.cert__img{
+  border-radius:var(--radius);overflow:hidden;background:var(--bg-soft);
+  border:1px solid var(--line);
+  aspect-ratio:4/3;display:flex;align-items:center;justify-content:center;
+}
+.cert__img img{width:100%;height:100%;object-fit:contain;padding:22px}
+.cert__img svg{width:56px;height:56px;stroke:var(--ink-3)}
+.cert__cap{margin-top:16px;text-align:center}
+.cert__cap .k{font-size:15px;font-weight:600;letter-spacing:-.01em;color:var(--ink)}
+.cert__cap .d{font-size:13px;color:var(--ink-3);margin-top:5px;font-weight:400;line-height:1.6}
+</style>
+</head>
+<body data-page="cert">
+
+<div class="wrap">
+  <header class="cert-head">
+    <p class="eyebrow reveal">/cert</p>
+    <h1 class="reveal">Sertifikalar & Belgeler</h1>
+    <p class="lede reveal" data-delay="120">Katıldığım eğitimler, aldığım görevlendirmeler ve resmî yetkinlik belgeleri.</p>
+  </header>
+
+  <div class="cert-grid">
+
+    <figure class="cert reveal">
+      <div class="cert__img">
+        <img src="cert/gorevlendirme-yazisi.png" alt="Görevlendirme yazısı"
+             onerror="this.outerHTML='<svg viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke-width=&quot;1.2&quot;><rect x=&quot;3&quot; y=&quot;5&quot; width=&quot;18&quot; height=&quot;14&quot; rx=&quot;2&quot;/><path d=&quot;M3 16l5-5 4 4 3-3 6 6&quot;/></svg>'">
+      </div>
+      <figcaption class="cert__cap">
+        <div class="k">Görevlendirme Yazısı</div>
+        <div class="d">Kurumsal görevlendirme belgesi</div>
+      </figcaption>
+    </figure>
+
+    <figure class="cert reveal" data-delay="120">
+      <div class="cert__img">
+        <img src="cert/git-egitim-sertifikasi.png" alt="Git eğitim sertifikası"
+             onerror="this.outerHTML='<svg viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke-width=&quot;1.2&quot;><rect x=&quot;3&quot; y=&quot;5&quot; width=&quot;18&quot; height=&quot;14&quot; rx=&quot;2&quot;/><path d=&quot;M3 16l5-5 4 4 3-3 6 6&quot;/></svg>'">
+      </div>
+      <figcaption class="cert__cap">
+        <div class="k">Hakemlik Sertifikası</div>
+        <div class="d">European Journal of Computer Sciences and Informatics Dergisinde yaptığım hakemlik sonucu aldığım hakemlik sertifikası</div>
+      </figcaption>
+    </figure>
+
+    <figure class="cert reveal" data-delay="200">
+      <div class="cert__img">
+        <img src="cert/linux-kernel-debugging.png" alt="Linux çekirdek hata ayıklama sertifikası"
+             onerror="this.outerHTML='<svg viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke-width=&quot;1.2&quot;><rect x=&quot;3&quot; y=&quot;5&quot; width=&quot;18&quot; height=&quot;14&quot; rx=&quot;2&quot;/><path d=&quot;M3 16l5-5 4 4 3-3 6 6&quot;/></svg>'">
+      </div>
+      <figcaption class="cert__cap">
+        <div class="k">Linux Kernel Debugging</div>
+        <div class="d">Çekirdek seviyesinde hata ayıklama yetkinlik belgesi</div>
+      </figcaption>
+    </figure>
+
+    <figure class="cert reveal" data-delay="300">
+      <div class="cert__img">
+        <img src="cert/github-advanced-security.png" alt="GitHub Advanced Security sertifikası"
+             onerror="this.outerHTML='<svg viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke-width=&quot;1.2&quot;><rect x=&quot;3&quot; y=&quot;5&quot; width=&quot;18&quot; height=&quot;14&quot; rx=&quot;2&quot;/><path d=&quot;M3 16l5-5 4 4 3-3 6 6&quot;/></svg>'">
+      </div>
+      <figcaption class="cert__cap">
+        <div class="k">GitHub Advanced Security</div>
+        <div class="d">Kod güvenliği ve sızıntı tespiti yetkinlik sertifikası</div>
+      </figcaption>
+    </figure>
+
+  </div>
+</div>
+
+<footer>
+  <p>Alperen Erkan — Ankara, Türkiye</p>
+  <p><a href="index.html">Ana Sayfa</a> · <a href="about.html">Hakkımda</a> · <a href="docs.html">Dökümanlar</a> · <a href="git.html">GitHub</a></p>
+</footer>
+
+<script src="shared.js"></script>
+</body>
+</html>
