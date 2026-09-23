@@ -13,6 +13,7 @@
       '<a href="index.html" class="'+(page==='home'?'active':'')+'">Ana Sayfa <small>/home</small></a>'+
       '<a href="about.html" class="'+(page==='about'?'active':'')+'">Hakkımda <small>/about</small></a>'+
       '<a href="git.html" class="'+(page==='git'?'active':'')+'">GitHub <small>/git</small></a>'+
+      '<a href="docs.html" class="'+(page==='docs'?'active':'')+'">Dökümanlar <small>/docs</small></a>'+
       '<div class="glass-menu__divider"></div>'+
       '<a href="https://github.com/erkanalperen54-boop" target="_blank" rel="noopener">github.com ↗ <small>profil</small></a>'+
     '</div>';
