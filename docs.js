@@ -13,199 +13,68 @@ window.DOCS_DATA = {
     {
       id: 'quantumos',
       name: 'QuantumOS',
-      tag: 'İşletim Sistemi',
-      desc: 'Deneysel işletim sistemi mimarisi — çekirdek tasarımı, zamanlayıcı ve bellek yönetimi notları.',
+      tag: 'Kernel',
+      desc: 'Kuantum sonrası kafes tabanlı şifreleme sistemleri için özel tasarlanmış çekirdek.',
       docs: [
         {
           id: 'giris',
           title: 'Giriş & Genel Bakış',
           md: `# QuantumOS — Genel Bakış
 
-QuantumOS, düşük seviyeli sistem programlama pratiklerini ve modern çekirdek tasarım ilkelerini bir araya getiren deneysel bir işletim sistemi projesidir.
+QuantumOS; Dünya genelinde kuantum sonrası kafes tabanlı şifreleme sistemleri, izojeni tabanlı şifreleme ve kod tabanlı şifreleme sistemlerinin anlaşılması ve uygulanması için geliştirilen orta ölçekli bir işletim sistemi çekirdeğidir. Sıfırdan 64-bit olarak tasarlanmış ve yeni Nox Standartları'na uygun bir biçimce tasarlanmıştır. Çekirdek kendi bünyesinde bir çok sayısal kütüphane barındır. Genel kurallarımız nedeniyle; hiç bir şekilde hazır kod, kütüphane veya araç barındırmaz. Bilimsel araştırmalara destek amaçlı bir çok aracı, kütüphaneyi bünyesinde barındırır.
 
-## Tasarım Hedefleri
-
-- **Sıfır bağımlılık (zero-dependency):** Harici kütüphane yok; saf C ve Assembly.
-- **Modüler mimari:** Her alt sistem bağımsız derlenir ve test edilir.
-- **Okunabilirlik:** Çekirdek kodu, dökümanıyla birlikte yaşar.
-
-## Alt Sistemler
-
-| Alt Sistem | Durum | Açıklama |
-|---|---|---|
-| Bootloader | ✅ Kararlı | Multiboot2 uyumlu |
-| Bellek Yöneticisi | 🚧 Geliştirme | PMM + VMM (4 KiB sayfalar) |
-| Zamanlayıcı | 🚧 Geliştirme | Preemptive, tick tabanlı |
-| Dosya Sistemi | 📋 Planlandı | VFS katmanı tasarım aşamasında |
-
-> **Not:** Bu dökümanlar geliştirme süreciyle birlikte güncellenir. Katkı önerileri için GitHub üzerinden iletişime geçebilirsiniz.`
+> **Not:** Bu dökümanlar geliştirme süreciyle birlikte güncellenir. Katkı önerileri için GitHub üzerinden iletişime geçebilirsiniz. [url: https://www.github.com/erkanalperen54-boop/QuantumOS]`
         },
         {
-          id: 'bellek-yonetimi',
-          title: 'Bellek Yönetimi',
-          md: `# Bellek Yönetimi
+          id: 'dosya-yapisi',
+          title: 'Genel Dosya Yapısı',
+          md: `# Dosya Yapısı 
 
-QuantumOS bellek yönetimi iki katmandan oluşur:
+QuantumOS ~300 farklı betiğin bir araya gelmesi ile oluşur. Genel Klasör açıklaması:
+- `kern`: Bu klasör QuantumOS'in temel çekirdeğini içinde barındırır; gerekli çağrılar, kesme yönetimleri, sistem izlencileri vb. kritik araçlar ve modülleri bünyesinde barındırır.
+- `libkern`: Bu klasör çekirdek ve bilimsel araştırmalar için sistem kütüphanelerini bünyesinde barındırır.
+- `ipc`: Bu klasör sistem genelinde çökmelere karşı dirençli, süreçler arasında iletişimi sağlar.
+- `boot`: Bu klasör iki farklı sisteme (Risc-v ve x86_64) uygun çekirdek başlatma rutinlerini sağlar.
+- `crypto`: Bu klasör bilimsel araştırmalar için bünyesinde; kafes tabanlı şifreleme sistemi (`crypto/lattice-based/`), izojeni tabanlı şifreleme sistemi (`crypto/separated/`), kod tabanlı şifreleme (`crypto/code-based/`), klasik şifreleme sistemleri (`crypto/cryptofs/`) ve genel amaçlı kauntum sonrası şifreleme sistemlerini (`crypto/quantum-based/`) barındırır.
+- `include`: bu klasör klasik şifreleme sistemi ve matematik kütüphanesi için geliştirilmiştir (**Oynanması veya değiştirilmesi önerilmez**).
 
-## 1. Fiziksel Bellek Yöneticisi (PMM)
-
-Açılışta bootloader'dan gelen bellek haritası okunur ve kullanılabilir bölgeler **bitmap** ile işaretlenir.
-
-\`\`\`c
-/* pmm.c — sayfa tahsisi */
-uint64_t pmm_alloc_page(void) {
-    for (uint64_t i = 0; i < bitmap_pages; i++) {
-        if (!bitmap_test(i)) {
-            bitmap_set(i);
-            return i * PAGE_SIZE;   /* 4 KiB */
-        }
-    }
-    return 0; /* bellek yok */
-}
-\`\`\`
-
-## 2. Sanal Bellek Yöneticisi (VMM)
-
-- 4 seviyeli sayfa tablosu (PML4 → PDP → PD → PT)
-- Kimlik eşleme (identity mapping) yalnızca açılışta kullanılır
-- Kernel alanı yüksek yarım küreye taşınır (**higher-half kernel**)
-
-## Tasarım Kararları
-
-1. Bitmap, serbest liste yerine tercih edildi — tahmin edilebilir tahsis süresi sağlar.
-2. Slab allocator, çekirdek nesneleri için ikinci aşamada eklenecek.`
+> Geliştirmelere bağlı şekilde diğer sayfalar eklenecektir :D`
         },
-        {
-          id: 'zamanlayici',
-          title: 'Zamanlayıcı (Scheduler)',
-          md: `# Zamanlayıcı Tasarımı
-
-QuantumOS zamanlayıcısı **preemptive** ve **round-robin** temellidir.
-
-## Temel Kavramlar
-
-- **Tick:** APIC timer üzerinden periyodik kesme (varsayılan 100 Hz)
-- **Run queue:** Hazır görevlerin tutulduğu döngüsel liste
-- **Context switch:** Görev kaydedicileri stack üzerine kaydedilir, RSP değiştirilir
-
-## Bağlam Değişimi
-
-\`\`\`nasm
-; switch_context(prev_rsp: rdi, next_rsp: rsi)
-switch_context:
-    push rbp
-    push rbx
-    push r12
-    push r13
-    push r14
-    push r15
-    mov  [rdi], rsp      ; önceki görevin stack'ini kaydet
-    mov  rsp, [rsi]      ; yeni görevin stack'ine geç
-    pop  r15
-    pop  r14
-    pop  r13
-    pop  r12
-    pop  rbx
-    pop  rbp
-    ret
-\`\`\`
-
-## Yol Haritası
-
-- [ ] Öncelikli kuyruk desteği
-- [ ] SMP (çok çekirdek) dengeleme
-- [ ] Gerçek zamanlı sınıf (RT class)`
-        }
       ]
     },
 
     /* ---------------- NeOx Ekosistemi ---------------- */
     {
-      id: 'neox-ekosistemi',
+      id: 'neox',
       name: 'NeOx Ekosistemi',
-      tag: 'Kernel + RTOS',
-      desc: 'Stux6 Technologies amiral gemisi — NeOx-Kernel mimarisi, IPC tasarımı ve RTOS bileşenleri.',
+      tag: 'Kernel + RTOS + OS + Standards + Librarys etc.',
+      desc: 'Stux6 ekosistemi',
       docs: [
         {
-          id: 'mimari-genel-bakis',
+          id: 'neox-genel-bakıs',
           title: 'Mimari Genel Bakış',
           md: `# NeOx Ekosistemi — Mimari
 
-NeOx, **NeOx-Kernel** çekirdeği etrafında şekillenen; gömülü ve gerçek zamanlı sistemleri hedefleyen bir ekosistemdir.
+**NeOx**, savunma sanayii, kritik ulusal altyapılar ve yüksek gizlilik gerektiren kurumsal operasyonlar için tasarlanmış; donanım tabanlı izolasyon ve yerleşik post-kuantum kriptografi sunan tescilli, kapalı kaynaklı bir çekirdek ekosistemidir.
 
-## Katmanlar
+##  Hedef Alanlar ve Kritik Sektörler
 
-1. **NeOx-Kernel** — Hibrit çekirdek: mikroçekirdek modülerliği + monolitik performans
-2. **NeOx-RTOS** — Deterministik zamanlama gerektiren gömülü uygulamalar için profil
-3. **Sistem Servisleri** — Sürücüler, ağ yığını, güvenlik modülleri (kullanıcı alanında)
+Geleneksel işletim sistemlerinin sunduğu yazılımsal güvenlik katmanları, ulusal ve kurumsal düzeydeki gelişmiş tehdit aktörleri karşısında yetersiz kalmaktadır. NeOx ekosistemi şu kritik alanlarda tavsuziz güvenlik sağlamak üzere inşa edilmiştir:
 
-## İlkeler
+* **Savunma Sanayii:** Askeri haberleşme, komuta-kontrol sistemleri ve taktiksel donanım entegrasyonları.
+* **Kritik Altyapılar:** Enerji, nükleer SCADA simülasyonları ve kritik şebeke kontrolü.
+* **İletişim ve Veri Gizliliği:** Devlet kurumları ve finansal yapılar için sızdırılamaz veri akış kanalları.
 
-- **Zero-dependency:** Tüm kod tabanı kendi araç zinciriyle derlenir.
-- **Least privilege:** Sürücüler dahil her bileşen minimum yetkiyle çalışır.
-- **Auditability:** Her sistem çağrısı izlenebilir ve kayıt altına alınabilir.
+---
 
-> NeOx, savunma sanayii gereksinimleri doğrultusunda yüksek güvenlikli gömülü çözümler için tasarlanmaktadır.`
-        },
-        {
-          id: 'ipc-tasarimi',
-          title: 'IPC Tasarımı',
-          md: `# Süreçler Arası İletişim (IPC)
+##  Mimari Üstünlükler ve Güvenlik Seviyesi
 
-NeOx IPC mekanizması, Mach'tan ilham alan ancak daha sade bir **port + mesaj** modeli kullanır.
+NeOx, sıradan çekirdek mimarilerinden farklı olarak en alt silisyum katmanından kullanıcı alanına kadar her aşamada sıkılaştırılmış güvenlik prensiplerini benimser:
 
-## Temel Yapı
-
-\`\`\`c
-typedef struct {
-    uint32_t  msg_id;
-    uint32_t  size;
-    uint64_t  port;      /* hedef port */
-    uint8_t   payload[]; /* esnek veri */
-} neox_msg_t;
-\`\`\`
-
-## Özellikler
-
-- **Senkron iletişim:** Gönderen, yanıt gelene kadar bloklanır (deterministik davranış)
-- **Zero-copy:** Büyük veriler sayfa paylaşımı ile aktarılır, kopya yapılmaz
-- **Yetki (capability) tabanlı port hakları:** Bir porta yazma hakkı açıkça devredilmelidir
-
-## Neden senkron?
-
-RTOS profilinde öngörülebilirlik esastır; asenkron kuyrukların getirdiği belirsiz gecikme kabul edilemez. Senkron model, öncelik devri (priority inheritance) ile birlikte kilitlenme senaryolarında üst sınır garantisi verir.`
-        },
-        {
-          id: 'guvenlik-modeli',
-          title: 'Güvenlik Modeli',
-          md: `# NeOx Güvenlik Modeli
-
-## Tehdit Varsayımları
-
-- Kullanıcı alanındaki her bileşen **potansiyel olarak düşmanca** kabul edilir
-- Sürücü hataları çekirdeği etkilememelidir
-
-## Savunma Katmanları
-
-| Katman | Mekanizma |
-|---|---|
-| Bellek | Sayfa bazlı izolasyon, W^X politikası |
-| Yetki | Capability tabanlı erişim kontrolü |
-| Kripto | **Kafes tabanlı (lattice-based)** algoritmalar — post-quantum dayanıklılık |
-| İzleme | Sistem çağrısı denetim günlüğü (audit log) |
-
-## Kafes Tabanlı Kriptografi
-
-NeOx'ta kimlik doğrulama ve bütünlük doğrulama süreçlerinde klasik RSA/ECC yerine **CRYSTALS-Kyber / Dilithium** ailesinden ilham alan yapılar değerlendirilmektedir. Amaç, kuantum sonrası dönemde de güvenli kalacak bir temel atmaktır.
-
-\`\`\`
-[ Anahtar Üretimi ] → [ Kapsülleme ] → [ Paylaşılan Sır ]
-   (Dilithium imzası her aşamada bütünlüğü doğrular)
-\`\`\`
-
-## İlke
-
-> Güvenlik bir özellik değil, mimarinin kendisidir.`
+* **Yerleşik Post-Kuantum Kriptografi:** Kafes tabanlı (Lattice-based) ve izojeni tabanlı (Isogeny-based) şifreleme algoritmaları, geleceğin kuantum bilgisayarlarının kıramayacağı matematiksel zırhlar sunar.
+* **Derin Donanım Hakları (Ring -3, -2, -1):** İşletim sisteminin standart çekirdek halkalarının (Ring 0) da ötesine geçerek; Hypervisor, SMM (System Management Mode) ve donanım firmware katmanlarında tam denetim ve yalıtım sağlar.
+* **EAL7 Seviyesi Güvenlik Hedefi:** Biçimsel doğrulama (formal verification) ve en yüksek düzeyde güvenlik değerlendirme kriterlerine uygun mimari tasarım.
+* **Tescilli ve Kapalı Kaynak (Proprietary):** Dışarıdan gelebilecek zafiyet taramalarına ve tedarik zinciri saldırılarına karşı tamamen izole, Stux6 Technology standartlarıyla korunan kod tabanı.`
         }
       ]
     }
