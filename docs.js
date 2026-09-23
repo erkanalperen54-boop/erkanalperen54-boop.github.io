@@ -3,7 +3,10 @@
    Yeni not eklemek için: ilgili projenin docs dizisine
    { id:'benzersiz-id', title:'Başlık', md: `...markdown...` }
    nesnesi eklemen yeterli. id'ler URL hash'inde kullanılır:
-   /docs#neox-ekosistemi/mimari-genel-bakis
+   /docs#neox/neox-genel-bakis
+
+   ÖNEMLİ: Markdown içinde backtick kullanırken \` şeklinde
+   kaçır (örn. \`kern\` gibi) — yoksa sözdizimi bozulur.
    ============================================================ */
 window.DOCS_DATA = {
 
@@ -21,25 +24,26 @@ window.DOCS_DATA = {
           title: 'Giriş & Genel Bakış',
           md: `# QuantumOS — Genel Bakış
 
-QuantumOS; Dünya genelinde kuantum sonrası kafes tabanlı şifreleme sistemleri, izojeni tabanlı şifreleme ve kod tabanlı şifreleme sistemlerinin anlaşılması ve uygulanması için geliştirilen orta ölçekli bir işletim sistemi çekirdeğidir. Sıfırdan 64-bit olarak tasarlanmış ve yeni Nox Standartları'na uygun bir biçimce tasarlanmıştır. Çekirdek kendi bünyesinde bir çok sayısal kütüphane barındır. Genel kurallarımız nedeniyle; hiç bir şekilde hazır kod, kütüphane veya araç barındırmaz. Bilimsel araştırmalara destek amaçlı bir çok aracı, kütüphaneyi bünyesinde barındırır.
+QuantumOS; Dünya genelinde kuantum sonrası kafes tabanlı şifreleme sistemleri, izojeni tabanlı şifreleme ve kod tabanlı şifreleme sistemlerinin anlaşılması ve uygulanması için geliştirilen orta ölçekli bir işletim sistemi çekirdeğidir. Sıfırdan 64-bit olarak tasarlanmış ve yeni Nox Standartları'na uygun bir biçimde tasarlanmıştır. Çekirdek kendi bünyesinde birçok sayısal kütüphane barındırır. Genel kurallarımız nedeniyle; hiçbir şekilde hazır kod, kütüphane veya araç barındırmaz. Bilimsel araştırmalara destek amaçlı birçok aracı ve kütüphaneyi bünyesinde barındırır.
 
-> **Not:** Bu dökümanlar geliştirme süreciyle birlikte güncellenir. Katkı önerileri için GitHub üzerinden iletişime geçebilirsiniz. [url: https://www.github.com/erkanalperen54-boop/QuantumOS]`
+> **Not:** Bu dökümanlar geliştirme süreciyle birlikte güncellenir. Katkı önerileri için GitHub üzerinden iletişime geçebilirsiniz: [github.com/erkanalperen54-boop/QuantumOS](https://www.github.com/erkanalperen54-boop/QuantumOS)`
         },
         {
           id: 'dosya-yapisi',
           title: 'Genel Dosya Yapısı',
-          md: `# Dosya Yapısı 
+          md: `# Dosya Yapısı
 
-QuantumOS ~300 farklı betiğin bir araya gelmesi ile oluşur. Genel Klasör açıklaması:
-- `kern`: Bu klasör QuantumOS'in temel çekirdeğini içinde barındırır; gerekli çağrılar, kesme yönetimleri, sistem izlencileri vb. kritik araçlar ve modülleri bünyesinde barındırır.
-- `libkern`: Bu klasör çekirdek ve bilimsel araştırmalar için sistem kütüphanelerini bünyesinde barındırır.
-- `ipc`: Bu klasör sistem genelinde çökmelere karşı dirençli, süreçler arasında iletişimi sağlar.
-- `boot`: Bu klasör iki farklı sisteme (Risc-v ve x86_64) uygun çekirdek başlatma rutinlerini sağlar.
-- `crypto`: Bu klasör bilimsel araştırmalar için bünyesinde; kafes tabanlı şifreleme sistemi (`crypto/lattice-based/`), izojeni tabanlı şifreleme sistemi (`crypto/separated/`), kod tabanlı şifreleme (`crypto/code-based/`), klasik şifreleme sistemleri (`crypto/cryptofs/`) ve genel amaçlı kauntum sonrası şifreleme sistemlerini (`crypto/quantum-based/`) barındırır.
-- `include`: bu klasör klasik şifreleme sistemi ve matematik kütüphanesi için geliştirilmiştir (**Oynanması veya değiştirilmesi önerilmez**).
+QuantumOS ~300 farklı betiğin bir araya gelmesi ile oluşur. Genel klasör açıklaması:
+
+- \`kern\`: Bu klasör QuantumOS'in temel çekirdeğini içinde barındırır; gerekli çağrılar, kesme yönetimleri, sistem izlencileri vb. kritik araçlar ve modülleri bünyesinde barındırır.
+- \`libkern\`: Bu klasör çekirdek ve bilimsel araştırmalar için sistem kütüphanelerini bünyesinde barındırır.
+- \`ipc\`: Bu klasör sistem genelinde çökmelere karşı dirençli, süreçler arasında iletişimi sağlar.
+- \`boot\`: Bu klasör iki farklı sisteme (RISC-V ve x86_64) uygun çekirdek başlatma rutinlerini sağlar.
+- \`crypto\`: Bu klasör bilimsel araştırmalar için bünyesinde; kafes tabanlı şifreleme sistemi (\`crypto/lattice-based/\`), izojeni tabanlı şifreleme sistemi (\`crypto/separated/\`), kod tabanlı şifreleme (\`crypto/code-based/\`), klasik şifreleme sistemleri (\`crypto/cryptofs/\`) ve genel amaçlı kuantum sonrası şifreleme sistemlerini (\`crypto/quantum-based/\`) barındırır.
+- \`include\`: Bu klasör klasik şifreleme sistemi ve matematik kütüphanesi için geliştirilmiştir (**Oynanması veya değiştirilmesi önerilmez**).
 
 > Geliştirmelere bağlı şekilde diğer sayfalar eklenecektir :D`
-        },
+        }
       ]
     },
 
@@ -47,19 +51,19 @@ QuantumOS ~300 farklı betiğin bir araya gelmesi ile oluşur. Genel Klasör aç
     {
       id: 'neox',
       name: 'NeOx Ekosistemi',
-      tag: 'Kernel + RTOS + OS + Standards + Librarys etc.',
+      tag: 'Kernel + RTOS + OS + Standards + Libraries',
       desc: 'Stux6 ekosistemi',
       docs: [
         {
-          id: 'neox-genel-bakıs',
+          id: 'neox-genel-bakis',
           title: 'Mimari Genel Bakış',
           md: `# NeOx Ekosistemi — Mimari
 
 **NeOx**, savunma sanayii, kritik ulusal altyapılar ve yüksek gizlilik gerektiren kurumsal operasyonlar için tasarlanmış; donanım tabanlı izolasyon ve yerleşik post-kuantum kriptografi sunan tescilli, kapalı kaynaklı bir çekirdek ekosistemidir.
 
-##  Hedef Alanlar ve Kritik Sektörler
+## Hedef Alanlar ve Kritik Sektörler
 
-Geleneksel işletim sistemlerinin sunduğu yazılımsal güvenlik katmanları, ulusal ve kurumsal düzeydeki gelişmiş tehdit aktörleri karşısında yetersiz kalmaktadır. NeOx ekosistemi şu kritik alanlarda tavsuziz güvenlik sağlamak üzere inşa edilmiştir:
+Geleneksel işletim sistemlerinin sunduğu yazılımsal güvenlik katmanları, ulusal ve kurumsal düzeydeki gelişmiş tehdit aktörleri karşısında yetersiz kalmaktadır. NeOx ekosistemi şu kritik alanlarda tavizsiz güvenlik sağlamak üzere inşa edilmiştir:
 
 * **Savunma Sanayii:** Askeri haberleşme, komuta-kontrol sistemleri ve taktiksel donanım entegrasyonları.
 * **Kritik Altyapılar:** Enerji, nükleer SCADA simülasyonları ve kritik şebeke kontrolü.
@@ -67,7 +71,7 @@ Geleneksel işletim sistemlerinin sunduğu yazılımsal güvenlik katmanları, u
 
 ---
 
-##  Mimari Üstünlükler ve Güvenlik Seviyesi
+## Mimari Üstünlükler ve Güvenlik Seviyesi
 
 NeOx, sıradan çekirdek mimarilerinden farklı olarak en alt silisyum katmanından kullanıcı alanına kadar her aşamada sıkılaştırılmış güvenlik prensiplerini benimser:
 
